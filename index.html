@@ -1,0 +1,160 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .calculator {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .calculator-screen {
+            width: 100%;
+            height: 80px;
+            background-color: #252525;
+            color: white;
+            border: none;
+            text-align: right;
+            padding: 20px;
+            font-size: 2rem;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .calculator-keys button {
+            height: 60px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="calculator bg-white p-6 rounded-lg shadow-lg">
+        <input type="text" class="calculator-screen" id="screen" disabled>
+        <div class="calculator-keys grid grid-cols-4 gap-4 mt-4">
+            <button class="bg-gray-200 rounded-lg">7</button>
+            <button class="bg-gray-200 rounded-lg">8</button>
+            <button class="bg-gray-200 rounded-lg">9</button>
+            <button class="bg-orange-500 text-white rounded-lg">/</button>
+            <button class="bg-gray-200 rounded-lg">4</button>
+            <button class="bg-gray-200 rounded-lg">5</button>
+            <button class="bg-gray-200 rounded-lg">6</button>
+            <button class="bg-orange-500 text-white rounded-lg">*</button>
+            <button class="bg-gray-200 rounded-lg">1</button>
+            <button class="bg-gray-200 rounded-lg">2</button>
+            <button class="bg-gray-200 rounded-lg">3</button>
+            <button class="bg-orange-500 text-white rounded-lg">-</button>
+            <button class="bg-gray-200 rounded-lg">0</button>
+            <button class="bg-gray-200 rounded-lg">.</button>
+            <button class="bg-gray-200 rounded-lg">%</button>
+            <button class="bg-orange-500 text-white rounded-lg">+</button>
+            <button class="bg-gray-200 rounded-lg">sin</button>
+            <button class="bg-gray-200 rounded-lg">cos</button>
+            <button class="bg-gray-200 rounded-lg">tan</button>
+            <button class="bg-gray-200 rounded-lg">ln</button>
+            <button class="bg-gray-200 rounded-lg">e</button>
+            <button class="bg-gray-200 rounded-lg">log</button>
+            <button class="bg-gray-200 rounded-lg">π</button>
+            <button class="bg-gray-200 rounded-lg">√</button>
+            <button class="bg-gray-200 rounded-lg">x^2</button>
+            <button class="bg-gray-200 rounded-lg">x^3</button>
+            <button class="bg-gray-200 rounded-lg">1/x</button>
+            <button class="bg-gray-200 rounded-lg">|x|</button>
+            <button class="bg-gray-200 rounded-lg">sinh</button>
+            <button class="bg-gray-200 rounded-lg">cosh</button>
+            <button class="bg-gray-200 rounded-lg">tanh</button>
+            <button class="bg-gray-200 rounded-lg">!</button>
+            <button class="bg-gray-200 rounded-lg">asin</button>
+            <button class="bg-gray-200 rounded-lg">acos</button>
+            <button class="bg-gray-200 rounded-lg">atan</button>
+            <button class="bg-gray-200 rounded-lg">C</button>
+            <button class="bg-gray-200 rounded-lg">CE</button>
+            <button class="bg-gray-200 rounded-lg col-span-2">=</button>
+        </div>
+    </div>
+    <script>
+        const screen = document.getElementById('screen');
+        const buttons = document.querySelectorAll('.calculator-keys button');
+        let currentInput = '';
+        let operator = '';
+        let firstOperand = '';
+        let secondOperand = '';
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.textContent;
+
+                if (value === 'C') {
+                    currentInput = '';
+                    firstOperand = '';
+                    secondOperand = '';
+                    operator = '';
+                    screen.value = '';
+                } else if (value === 'CE') {
+                    currentInput = '';
+                    screen.value = '';
+                } else if (value === '=') {
+                    secondOperand = currentInput;
+                    screen.value = calculate(firstOperand, secondOperand, operator);
+                    currentInput = screen.value;
+                    firstOperand = '';
+                    secondOperand = '';
+                    operator = '';
+                } else if (['+', '-', '*', '/', '%', 'sin', 'cos', 'tan', 'ln', 'log', 'π', '√', 'x^2', 'x^3', '1/x', '|x|', 'sinh', 'cosh', 'tanh', '!', 'asin', 'acos', 'atan'].includes(value)) {
+                    if (currentInput !== '') {
+                        firstOperand = currentInput;
+                        operator = value;
+                        currentInput = '';
+                    }
+                } else {
+                    currentInput += value;
+                    screen.value = currentInput;
+                }
+            });
+        });
+
+        function calculate(first, second, operator) {
+            const a = parseFloat(first);
+            const b = parseFloat(second);
+            switch (operator) {
+                case '+': return a + b;
+                case '-': return a - b;
+                case '*': return a * b;
+                case '/': return a / b;
+                case '%': return a % b;
+                case 'sin': return Math.sin(a);
+                case 'cos': return Math.cos(a);
+                case 'tan': return Math.tan(a);
+                case 'ln': return Math.log(a);
+                case 'log': return Math.log10(a);
+                case 'π': return Math.PI;
+                case '√': return Math.sqrt(a);
+                case 'x^2': return Math.pow(a, 2);
+                case 'x^3': return Math.pow(a, 3);
+                case '1/x': return 1 / a;
+                case '|x|': return Math.abs(a);
+                case 'sinh': return Math.sinh(a);
+                case 'cosh': return Math.cosh(a);
+                case 'tanh': return Math.tanh(a);
+                case '!': return factorial(a);
+                case 'asin': return Math.asin(a);
+                case 'acos': return Math.acos(a);
+                case 'atan': return Math.atan(a);
+                default: return 0;
+            }
+        }
+
+        function factorial(n) {
+            if (n === 0 || n === 1) return 1;
+            return n * factorial(n - 1);
+        }
+    </script>
+</body>
+</html>
