@@ -20,23 +20,9 @@ Installation
 To run this project locally, follow these steps:
 
 1. Clone the repository:
-
-bash
-Verify
-
-Open In Editor
-Edit
-Copy code
 "git clone https://github.com/somya070/scientific-calculator.git"
 
 2. Navigate to the project directory:
-
-bash
-Verify
-
-Open In Editor
-Edit
-Copy code
 "cd scientific-calculator"
 
 3. Open the index.html file in your web browser.
@@ -55,16 +41,9 @@ Fork the repository.
 Create a new branch for your feature or bug fix.
 Make your changes and commit them.
 Push to your branch and open a pull request.
-License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
-
-Acknowledgements
 
 Tailwind CSS for styling.
 Font Awesome for icons (if used in the future).
-Google Fonts for the font used in the application.
-Contact
 
 For any inquiries or feedback, please reach out to your email.
 
